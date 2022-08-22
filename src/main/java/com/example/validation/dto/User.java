@@ -1,10 +1,12 @@
 package com.example.validation.dto;
 
+import com.example.validation.annotation.YearMonth;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.*;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 public class User {
 
@@ -19,7 +21,7 @@ public class User {
     @Pattern(regexp = "^\\d{2,3}-\\d{3,4}-\\d{4}$", message = "번호 양식과 맞지 않습니다. 000-0000-0000")
     private String phoneNumber;
 
-    @Size(min = 6, max = 6)
+    @YearMonth(pattern = "yyyyMMdd")
     private String reqYearMonth; // yyyyMM
 
     public String getName() {
@@ -61,19 +63,6 @@ public class User {
 
     public void setReqYearMonth(String reqYearMonth) {
         this.reqYearMonth = reqYearMonth;
-    }
-
-    @AssertTrue(message = "yyyyMM의 형식에 맞지 않습니다.")
-    public boolean isReqYearMonthValidation() {
-
-        try {
-            LocalDate localDate = LocalDate.parse(getReqYearMonth() + "01", DateTimeFormatter.ofPattern("yyyyMMdd"));
-
-        } catch (Exception e) {
-            return false;
-        }
-
-        return true;
     }
 
     @Override

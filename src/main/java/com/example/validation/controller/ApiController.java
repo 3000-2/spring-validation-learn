@@ -17,18 +17,18 @@ import javax.validation.Valid;
 public class ApiController {
 
     @PostMapping("/user")
-    public ResponseEntity user(@Valid @RequestBody User user, BindingResult bindingResult){
+    public ResponseEntity user(@Valid @RequestBody User user, BindingResult bindingResult) {
 
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             StringBuilder sb = new StringBuilder();
             bindingResult.getAllErrors().forEach(objectError -> {
                 FieldError field = (FieldError) objectError;
                 String message = objectError.getDefaultMessage();
 
 
-                sb.append("field : "+field.getField());
+                sb.append("field : " + field.getField());
                 sb.append("\n");
-                sb.append("message : "+message);
+                sb.append("message : " + message);
             });
 
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(sb);
